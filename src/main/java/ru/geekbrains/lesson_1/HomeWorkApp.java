@@ -28,7 +28,8 @@ public class HomeWorkApp {
         int value = 10;
         if (value <= 0) {
             System.out.println("Красный");
-        } else if (value > 0 && value <= 100) {
+//      Стоит обратить на излишние условия
+        } else if (value <= 100) {
             System.out.println("Желтый");
         } else {
             System.out.println("Зеленый");
