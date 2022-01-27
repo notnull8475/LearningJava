@@ -19,11 +19,7 @@ public class HomeWorkLesson2 {
     * */
 
     public static boolean sum(int a, int b) {
-        if (a + b > 10 && a + b <= 20) {
-            return true;
-        } else {
-            return false;
-        }
+        return a + b > 10 && a + b <= 20;
     }
 
     /*
@@ -44,11 +40,7 @@ public class HomeWorkLesson2 {
         вернуть true, если число отрицательное, и вернуть false если положительное.
     * */
     public static boolean positiveNumber(int a) {
-        if (a < 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return a < 0;
     }
 
     /*
@@ -67,11 +59,7 @@ public class HomeWorkLesson2 {
     100-го, при этом каждый 400-й – високосный.
     */
     public static boolean leapYear(int year) {
-        if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
-            return true;
-        } else {
-            return false;
-        }
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
 
 }
