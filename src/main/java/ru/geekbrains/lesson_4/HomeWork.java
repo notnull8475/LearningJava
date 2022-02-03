@@ -1,5 +1,6 @@
 package ru.geekbrains.lesson_4;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -164,5 +165,113 @@ public class HomeWork {
             System.out.println();
         }
         System.out.println();
+    }
+
+
+//    TODO доработать логику ИИ в крестиках ноликах
+
+    public static int[] aiTurn1() {
+        int[] result = new int[2];
+
+        int[][][] aiMap = new int[SIZE][SIZE][3];
+        /*копия игровой карты
+         * в которой будут указаны
+         * вес - то есть ценность ячейки для хода AI
+         * int[SIZE][SIZE][0] - значение занимаемое на карте
+         * int[SIZE][SIZE][1] - ценность для атаки ИИ
+         * int[SIZE][SIZE][2] - ценность для защиты ИИ
+         * */
+
+//        проходим по каждой ячейке массива (карты)
+//        копируем в свой массив
+        for (int y = 0; y < SIZE; y++) {
+            for (int x = 0; x < SIZE; x++) {
+                if (map[y][x] == DOT_O) {
+                    aiMap[y][x][0] = 0;
+                }
+                if (map[y][x] == DOT_X) {
+                    aiMap[y][x][0] = 1;
+                }
+                if (map[y][x] == DOT_EMPTY) {
+                    aiMap[y][x][0] = 2;
+                }
+
+                for (int i = 0; i < SIZE; i++) {
+                    if (map[y][i] == DOT_O) {
+                        aiMap[y][x][2]++;
+                    }
+                    if (map[y][i] == DOT_X) {
+                        aiMap[y][x][1]++;
+                    }
+
+                    if (map[i][x] == DOT_O) {
+                        aiMap[y][x][2]++;
+                    }
+                    if (map[i][x] == DOT_X) {
+                        aiMap[y][x][1]++;
+                    }
+
+
+                    int k = i + 1;
+
+                    if (x - k > -1 && y - k > -1 && map[y - k][x - k] == DOT_O) {
+                        aiMap[y][x][2]++;
+                    }
+                    if (x - k > -1 && y - k > -1 && map[y - k][x - k] == DOT_X) {
+                        aiMap[y][x][1]++;
+                    }
+                    if (x + k < SIZE && y + k < SIZE && map[y + k][x + k] == DOT_O) {
+                        aiMap[y][x][2]++;
+                    }
+                    if (x + k < SIZE && y + k < SIZE && map[y + k][x + k] == DOT_X) {
+                        aiMap[y][x][1]++;
+                    }
+
+
+                    if (x + k < SIZE && y - k > -1 && map[y - k][x + k] == DOT_O) {
+                        aiMap[y][x][2]++;
+                    }
+                    if (x + k < SIZE && y - k > -1 && map[y - k][x + k] == DOT_X) {
+                        aiMap[y][x][1]++;
+                    }
+                    if (x - k > -1 && y + k < SIZE && map[y + k][x - k] == DOT_O) {
+                        aiMap[y][x][2]++;
+                    }
+                    if (x - k > -1 && y + k < SIZE && map[y + k][x - k] == DOT_X) {
+                        aiMap[y][x][1]++;
+                    }
+
+                }
+            }
+        }
+
+        int[] p = {0, 0};
+        int[] a = {0, 0};
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (aiMap[a[0]][a[1]][1] < aiMap[i][j][1] && isCellValid(j, i)) {
+                    System.out.println(Arrays.toString(a));
+                    a[0] = i;
+                    a[1] = j;
+                }
+                if (aiMap[p[0]][p[1]][2] < aiMap[i][j][2] && isCellValid(j, i)) {
+                    System.out.println(Arrays.toString(p));
+                    p[0] = i;
+                    p[1] = j;
+                }
+            }
+        }
+        if (aiMap[a[0]][a[1]][1] > aiMap[p[0]][p[1]][2]) {
+            if (isCellValid(a[0], a[1])) {
+                map[a[0]][a[1]] = DOT_O;
+                return a;
+            }
+        } else {
+            if (isCellValid(p[0], p[1])) {
+                map[p[0]][p[1]] = DOT_O;
+                return p;
+            }
+        }
+        return aiTurn();
     }
 }
