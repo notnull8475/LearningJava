@@ -56,6 +56,7 @@ public class HomeWork {
         System.out.println("Игра закончена");
     }
 
+// TODO Доработать алгоритм проверки
     public static boolean checkWin(int x, int y) {
         int xs = 0; // по горизонтали
         int ys = 0; // по вертикали
