@@ -41,22 +41,21 @@ public class HomeWork {
                 System.out.println("Ничья");
                 break;
             }
-            res = aiTurn();
-            printMap();
-            if (checkWin(res[1], res[0])) {
-                System.out.println("Победил Искуственный Интеллект");
-                break;
-            }
-            if (isMapFull()) {
-                System.out.println("Ничья");
-                break;
-            }
+//            res = aiTurn();
+//            printMap();
+//            if (checkWin(res[1], res[0])) {
+//                System.out.println("Победил Искуственный Интеллект");
+//                break;
+//            }
+//            if (isMapFull()) {
+//                System.out.println("Ничья");
+//                break;
+//            }
         }
 
         System.out.println("Игра закончена");
     }
 
-// TODO Доработать алгоритм проверки
     public static boolean checkWin(int x, int y) {
         int xs = 0; // по горизонтали
         int ys = 0; // по вертикали
@@ -68,9 +67,22 @@ public class HomeWork {
             if (map[j][y] == map[x][y]) {
                 xs++;
             }
+            if (xs >= DOTS_TO_WIN) {
+                return true;
+            }
+            if (map[j][y] != map[x][y]) {
+                xs = 0;
+            }
+
 //            2. проверка по Y
             if (map[x][j] == map[x][y]) {
                 ys++;
+            }
+            if (ys >= DOTS_TO_WIN) {
+                return true;
+            }
+            if (map[x][j] != map[x][y]) {
+                ys = 0;
             }
 //            3. проверка по диагонали = наклон влево \
 
@@ -79,10 +91,22 @@ public class HomeWork {
                 if (map[x - i][y - i] == map[x][y]) {
                     xd++;
                 }
+                if (xd >= DOTS_TO_WIN) {
+                    return true;
+                }
+                if (map[x - i][y - i] != map[x][y]) {
+                    xd = 0;
+                }
             }
             if (x + i < SIZE && y + i < SIZE) {
                 if (map[x + i][y + i] == map[x][y]) {
                     xd++;
+                }
+                if (xd >= DOTS_TO_WIN) {
+                    return true;
+                }
+                if (map[x + i][y + i] != map[x][y]) {
+                    xd = 0;
                 }
             }
 
@@ -91,14 +115,26 @@ public class HomeWork {
                 if (map[x + i][y - i] == map[x][y]) {
                     yd++;
                 }
+                if (yd >= DOTS_TO_WIN) {
+                    return true;
+                }
+                if (map[x + i][y - i] != map[x][y]) {
+                    yd = 0;
+                }
             }
             if (y + i < SIZE && x - i > -1) {
                 if (map[x - i][y + i] == map[x][y]) {
                     yd++;
                 }
+                if (yd >= DOTS_TO_WIN) {
+                    return true;
+                }
+                if (map[x - i][y + i] != map[x][y]) {
+                    yd = 0;
+                }
             }
         }
-        return xs == DOTS_TO_WIN || ys == DOTS_TO_WIN || xd == DOTS_TO_WIN || yd == DOTS_TO_WIN;
+        return false;
     }
 
     //проверка заполнения карты не символами DOT_EMPTY
